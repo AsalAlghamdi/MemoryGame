@@ -30,19 +30,11 @@ function retrievePlayersData(){
             playersData.push(childSnapshot.child("username").val());
             playersData.push(childSnapshot.child("timer").val());
             playersData.push(childSnapshot.child("rate").val());
-
-            console.log("username : " + childSnapshot.child("username").val());
-            console.log("rate : " + childSnapshot.child("rate").val());
-            console.log("timer : " + childSnapshot.child("timer").val());
         });
     });
 }
 retrievePlayersData();
-
 function creatPlayerListOnHtml(){
-    console.log(playersData[9]);
-    console.log("playersData: " + playersData.length);
-
     if (playersData.length > 0){
         const frag = document.createDocumentFragment();
         let timers = new Array(); // collect all timers of all players in one array
@@ -57,19 +49,16 @@ function creatPlayerListOnHtml(){
                 const splitTime = time.split(":");
                 let currentTime = ((parseInt(splitTime[0], 10)) * 60) + (parseInt(splitTime[1], 10));
                 timers.push(currentTime);
-                console.log("currentTime " + currentTime);
             }
             else {
                 timers.push(1000);
             }
-
             const li = document.createElement('li');
             const pName = document.createElement('p');
             const pTimer = document.createElement('p');
             const pRate = document.createElement('p');
             li.className = 'player';
             pName.id = "player" + idIndxCounter; // set id of p tag with timers index to match between them easy 
-            console.log("pName.id: " + pName.id);
             pName.innerHTML = name;
             pTimer.innerHTML = time;
             pRate.innerHTML = rate;
@@ -77,8 +66,6 @@ function creatPlayerListOnHtml(){
             li.appendChild(pTimer);
             li.appendChild(pRate);
             frag.appendChild(li);
-
-            console.log(idIndxCounter);
             idIndxCounter++;
         }
         document.querySelector(".playersList").appendChild(frag);
@@ -95,7 +82,6 @@ function creatPlayerListOnHtml(){
         }
     }
 }
-
 function addPlayerToPlayerList(playername, timer, rate){
     let currentPlayer = document.querySelector(".currentPlayer");
     if (currentPlayer != null){ 
@@ -104,7 +90,6 @@ function addPlayerToPlayerList(playername, timer, rate){
     let text = `<li class="player currentPlayer"><p>${playername}</p><p>${timer}</p><p>${rate}</p></li>`;
     document.querySelector(".playersList").insertAdjacentHTML('afterbegin', text);
 }
-
 /*
  * Create a list that holds all of your cards
  */
@@ -128,14 +113,12 @@ const playerNameInput = document.querySelector("#playerName");
 let playerName = "Unknown";
 let timerTextToDB = "0:0";
 let rate = "⭐?";
-
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -150,7 +133,6 @@ function shuffle(array) {
 
     return array;
 }
-
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -161,7 +143,6 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
 */
-
 const timer = () => {
     timerSec++;
     if (timerSec === 60.0) {
@@ -170,7 +151,6 @@ const timer = () => {
     }
     timerText.innerHTML = `${timerMin}:${timerSec}`;
 };
-
 let reassignIcons = () => {
     // array of icones class name (bootstrap font-awesome)
     let iconsArr = ["fa-diamond", "fa-bicycle", "fa-bomb", "fa-leaf", "fa-anchor", "fa-paper-plane-o", "fa-cube", "fa-bolt", "fa-diamond", "fa-bicycle", "fa-bomb", "fa-leaf", "fa-anchor", "fa-paper-plane-o", "fa-cube", "fa-bolt"]; 
@@ -186,18 +166,13 @@ const openCard = (card) => {
     card.classList.toggle("open");
     card.classList.toggle("show");
 };
-
 /* if card match */
 const matchCard = (card) => {
     card.classList.add("match");
 };
-
 const chekTowCards = (card1, card2) => {
     let str1 = card1.className; // string hold the classes of the fist card
     let str2 = card2.className; // string hold the classes of the second card
-    console.log(str1);
-    console.log(str2);
-
     if (str1.includes(str2)) {
         matchCard(card1.parentNode);
         matchCard(card2.parentNode);
@@ -213,14 +188,11 @@ const chekTowCards = (card1, card2) => {
         }, 500);
     }
 };
-
 // if card clicked
 const cardClicked = (card) => {
-    console.log("befor:" + card.className);
     if (card.className === "card" ){ // if the clicked card not open or has matched
         moveCounter++;
         moves.innerHTML = moveCounter;
-        console.log(moveCounter);
         if (moveCounter > 55){
             starRate[1].classList.remove("fa-star");
         } else if (moveCounter > 38){
@@ -230,7 +202,6 @@ const cardClicked = (card) => {
             card.classList.toggle("open");
             card.classList.toggle("show");
             clickedCards.push(card);
-            console.log("yess");
         }
         else if (clickedCards.length == 1) {
             card.classList.toggle("open");
@@ -245,17 +216,13 @@ const cardClicked = (card) => {
         clickedCards.pop();
         card.className = "card";
     }
-
-    console.log("after:" + card.className);
 };
-
 // assign click event for each cards
 cards.forEach(
     function (card) {
         card.addEventListener('click', function () {cardClicked(card);});
     }
 );
-
 const start = () => {
     let text = playerNameInput.value;
     if (text === ""){
@@ -266,11 +233,9 @@ const start = () => {
         userId = firebase.database().ref().push().key; //define a player ID so every time player restart the game just modify the score to the same ID and not assign a new player
         intervalId = setInterval(timer, 1000);
         playerName = text.substr(0, 14); 
-        console.log("playerName: " + playerName);
         layer2.style.display = "none";
     }
 };
-
 const gameOver = () => {
     clearInterval(intervalId);
     timerTextToDB = `${timerMin} : ${timerSec}`;
@@ -300,10 +265,7 @@ const gameOver = () => {
     writePlayerData(playerName, timerTextToDB, rate);
     addPlayerToPlayerList(playerName, timerTextToDB, rate);
     layer.style.display = "block";
-    
-    console.log("Game Over!");
 };
-
 const restart = () => {
     starRate[0].classList.add("fa-star");
     starRate[1].classList.add("fa-star");
@@ -325,5 +287,4 @@ const restart = () => {
     );
     reassignIcons();
 };
-
 restartElm.addEventListener('click', function () { restart(); });
