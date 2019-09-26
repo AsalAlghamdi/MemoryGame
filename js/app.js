@@ -109,6 +109,7 @@ function addPlayerToPlayerList(playername, timer, rate){
  * Create a list that holds all of your cards
  */
 const cards = document.querySelectorAll(".card");
+const starRate = document.querySelectorAll(".starRate");
 let clickedCards = new Array(); // to pick the clicked card and compare it with the next card 
 let matchCounter = 0; // add one each time player match tow cards, if counter reach 8 then all cards match and the palyer win
 const icons = document.querySelectorAll(".icon");
@@ -220,6 +221,11 @@ const cardClicked = (card) => {
         moveCounter++;
         moves.innerHTML = moveCounter;
         console.log(moveCounter);
+        if (moveCounter > 55){
+            starRate[1].classList.remove("fa-star");
+        } else if (moveCounter > 38){
+            starRate[0].classList.remove("fa-star");
+        }
         if (clickedCards.length == 0) {
             card.classList.toggle("open");
             card.classList.toggle("show");
@@ -299,6 +305,8 @@ const gameOver = () => {
 };
 
 const restart = () => {
+    starRate[0].classList.add("fa-star");
+    starRate[1].classList.add("fa-star");
     timerText.innerHTML = "0:0";
     clearInterval(intervalId);
     matchCounter = 0;
