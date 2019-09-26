@@ -2,7 +2,7 @@
 It is a simple game I created with Javascript, HTML and CSS
 
 ## How to play the game 
-Try to find the match cards to win the game, there is a timer try to fiugre all card in the least time and least steps.
+Try to find the match cards to win the game, there is a timer try to figure all card in the least time and least steps.
 
 ## There are a three Emojis the player can get [🔥, 👍, 🐢]:
 - 🔥 : means the speed of player is fast 
