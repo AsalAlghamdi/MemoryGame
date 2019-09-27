@@ -103,6 +103,7 @@ const layer2 = document.querySelector(".startLayer");
 let timerMin = 0.0;
 let timerSec = 0.0;
 let time = document.querySelector("#time");
+let movement = document.querySelector("#movement");
 let stars = document.querySelector("#stars");
 let moves = document.querySelector(".moves");
 let timerText = document.querySelector("#timerText");
@@ -212,10 +213,6 @@ const cardClicked = (card) => {
             chekTowCards(card1[1], card2[1]);
         }
     }
-    else if (card.className.includes("open") && !card.className.includes("match")) { // if the clicked card open then hide it 
-        clickedCards.pop();
-        card.className = "card";
-    }
 };
 // assign click event for each cards
 cards.forEach(
@@ -240,6 +237,7 @@ const gameOver = () => {
     clearInterval(intervalId);
     timerTextToDB = `${timerMin} : ${timerSec}`;
     time.innerHTML = timerTextToDB;
+    movement.innerHTML = moveCounter;
     if (moveCounter < 38){
         stars.innerHTML = "⭐ ⭐ ⭐";
         rate = "⭐3";
@@ -255,7 +253,7 @@ const gameOver = () => {
     /**
      * add Emojie depend on time: 🔥 Fast - 👍 Average - 🐢 Slow
      */
-    if (countTime < 33) { 
+    if (countTime < 35) { 
         playerName += " |🔥";
     } else if (countTime < 55){ 
         playerName += " |👍";
