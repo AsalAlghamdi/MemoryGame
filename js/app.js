@@ -34,6 +34,8 @@ function retrievePlayersData(){
     });
 }
 retrievePlayersData();
+let medalPlayer = "";
+let lessTimer = 0;
 function creatPlayerListOnHtml(){
     if (playersData.length > 0){
         const frag = document.createDocumentFragment();
@@ -73,12 +75,17 @@ function creatPlayerListOnHtml(){
          * Give the faster player and only who make 3 stars the gold medal
          * Note: if there more than player have the same timer then no one have the gold medal
          */
-        const lessTimer = Math.min(...timers); // get minimum timer in the array
+        lessTimer = Math.min(...timers); // get minimum timer in the array
         let index = timers.indexOf(lessTimer); // get the index of that timer 
         index = (timers.slice(index + 1, timers.length)).indexOf(lessTimer); // check if the timer is not repeated in another index
         if (index === -1) {
-            const id = timers.indexOf(lessTimer);
-            document.querySelector(`#player${id}`).innerHTML += "🥇"
+            medalPlayer = timers.indexOf(lessTimer);
+            medalPlayer = `#player${medalPlayer}`;
+            /* const id = timers.indexOf(lessTimer);
+            document.querySelector(`#player${id}`).innerHTML += "🥇"; */
+        }
+        else {
+            medalPlayer = "NoPlayer";
         }
     }
 }
@@ -261,6 +268,12 @@ const gameOver = () => {
         playerName += " |🐢";
     }
     writePlayerData(playerName, timerTextToDB, rate);
+    // medalPlayer = "NoPlayer" && medalPlayer === "NoPlayer"
+    if (countTime < lessTimer) {
+        playerName += "🥇";
+    } else {
+        document.querySelector(medalPlayer).innerHTML += "🥇";
+    }
     addPlayerToPlayerList(playerName, timerTextToDB, rate);
     layer.style.display = "block";
 };
