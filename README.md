@@ -13,9 +13,9 @@ Try to find the match cards to win the game, there is a timer try to figure all 
 The golden medal is given for one player who get three stars and was the faster one who take minimum time to end the game.
 
 ## Project Dependencies Used in The Project
-- Bootstrap font-awesome [https://fontawesome.bootstrapcheatsheets.com/]
-- Daneden animate.css[https://github.com/daneden/animate.css]
-- Firebase real time database [https://firebase.google.com/docs/database/web/start]
+- Bootstrap font-awesome. [link](https://fontawesome.bootstrapcheatsheets.com/)
+- Daneden animate.css. [link](https://github.com/daneden/animate.css)
+- Firebase real time database. [link](https://firebase.google.com/docs/database/web/start)
 
 ## URL Link 🔗
 https://memorygame-ae106.web.app/
